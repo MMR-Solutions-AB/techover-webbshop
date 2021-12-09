@@ -1,54 +1,68 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Typography, Container, Grid, Button } from '@mui/material';
+import ProductCard from '../../ProductCard/ProductCard.js';
 import useStyles from './styles';
 import { connect } from 'react-redux';
-import ProductCard from '../../ProductCard/ProductCard';
+import { incrementProduct, decrementProduct } from '../../../reduxStore/actions/cartActions';
 
-const Products = ({ products, loading, error }) => {
+const Products = ({ products, error, loading, onDecrement, onIncrement }) => {
 	const classes = useStyles();
+	console.log({ products });
 
 	const renderProductCards = () => {
-		if (loading) return [1, 2, 3, 4, 5].map((d) => <ProductCard loading={loading} key={d} />);
+		if (loading) return [1, 2, 3, 4, 5].map((d) => <ProductCard key={d} loading={true} />);
 
-		const array = products.map((item) => {
-			return <ProductCard {...item} loading={loading} key={item.id} />;
+		return products.map((prod, i) => {
+			return (
+				<ProductCard
+					{...prod}
+					loading={false}
+					key={i}
+					onIncrement={() => onIncrement(prod)}
+					onDecrement={() => onDecrement(prod)}
+					isLast={i === products.length - 1}
+				/>
+			);
 		});
-
-		return array;
 	};
 
 	return (
 		<div id="Product__screen">
 			<Container maxWidth="md">
 				<div className="Products__view">
-					{/* Header */}
-					<Typography variant="h1">Välj varor</Typography>
-					{/* END Header */}
-
-					{/* Items */}
-					<Grid container spacing={2}>
+					<div className={classes.productHeader}>
+						<Typography variant="h1" className={classes.productsTitle}>
+							Välj varor
+						</Typography>
+					</div>
+					<Grid container spacing={2} justify="center">
 						<Grid item xs={12}>
 							{renderProductCards()}
 						</Grid>
 					</Grid>
-					{/* END Items */}
+					<div className={classes.buttonContainer}>
+						<Button variant="contained">Köp</Button>
+					</div>
 				</div>
 			</Container>
 		</div>
 	);
 };
 
-{
-	/* <div class="row">
-    <div class="col s12 m6 l4"></div>
-    <div class="col s12 m6 l4"></div>
-    <div class="col s12 m6 l4"></div>
-</div> */
-}
-
-const mapState = (state) => {
+const mapStateToProps = (state) => {
 	const { items, loading, error } = state.products;
-	return { products: items, loading, error };
+	return {
+		products: items,
+		error,
+		loading
+	};
 };
 
-export default connect(mapState)(Products);
+const mapDIspatchToProps = (dispatch) => {
+	return {
+		onIncrement: (data) => dispatch(incrementProduct(data)),
+		onDecrement: (data) => dispatch(decrementProduct(data))
+	};
+};
+
+export default connect(mapStateToProps, mapDIspatchToProps)(Products);

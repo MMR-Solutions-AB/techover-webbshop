@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) =>
 			position: 'relative',
 			width: '100%',
 			height: 130,
-			backgroundColor: '#ffffff',
+			backgroundColor: '#fff',
+			color: '#1b1b1b',
 			boxShadow: '0px 2px 1px 0px rgba(0, 0, 0, 0.1)'
 		},
 		productCardFlex: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) =>
 			alignItems: 'center',
 			paddingLeft: '20px',
 			width: '80%',
-			left: 0,
+			left: '0px',
 			height: '120px',
 			margin: 0,
 			position: 'absolute',
@@ -35,14 +36,42 @@ const useStyles = makeStyles((theme) =>
 			transform: 'translateY(-50%)'
 		},
 		img: {
-			width: 65,
-			marginRight: 20,
+			width: '65px',
+			marginRight: '20px',
 			objectFit: 'contain'
 		},
-		details: {},
-		title: {},
-		detailMargin: {},
-		buttons: {}
+		details: {
+			left: 0,
+			float: 'left'
+		},
+		title: {
+			fontSize: '17px',
+			lineHeight: 'normal'
+		},
+		detailMargin: {
+			margin: 0,
+			marginBottom: 5
+		},
+		buttons: {
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+			flexDirection: 'column',
+			position: 'absolute',
+			right: '0px',
+			height: '100%'
+		},
+		button: {
+			color: '#00c896'
+		},
+		buttonDisabled: {
+			color: '#f7f8fa'
+		},
+		divider: {
+			transform: 'translateY(-1px)',
+			width: '90%',
+			margin: 'auto'
+		}
 	})
 );
 
